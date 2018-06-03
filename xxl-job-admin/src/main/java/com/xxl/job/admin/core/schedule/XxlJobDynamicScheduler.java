@@ -1,5 +1,7 @@
 package com.xxl.job.admin.core.schedule;
 
+import com.ik2k.lithos.admin.biz.LithosNetComClientProxy;
+import com.ik2k.lithos.core.biz.LithosAdminBiz;
 import com.xxl.job.admin.core.jobbean.RemoteHttpJobBean;
 import com.xxl.job.admin.core.model.XxlJobInfo;
 import com.xxl.job.admin.core.thread.JobFailMonitorHelper;
@@ -12,7 +14,6 @@ import com.xxl.job.admin.dao.XxlJobRegistryDao;
 import com.xxl.job.core.biz.AdminBiz;
 import com.xxl.job.core.biz.ExecutorBiz;
 import com.xxl.job.core.enums.ExecutorBlockStrategyEnum;
-import com.xxl.job.core.rpc.netcom.NetComClientProxy;
 import com.xxl.job.core.rpc.netcom.NetComServerFactory;
 import org.quartz.*;
 import org.quartz.Trigger.TriggerState;
@@ -55,6 +56,7 @@ public final class XxlJobDynamicScheduler implements ApplicationContextAware {
     public static XxlJobRegistryDao xxlJobRegistryDao;
     public static XxlJobGroupDao xxlJobGroupDao;
     public static AdminBiz adminBiz;
+    public static LithosAdminBiz lithosAdminBiz;
 
     // ---------------------- applicationContext ----------------------
     @Override
@@ -64,6 +66,7 @@ public final class XxlJobDynamicScheduler implements ApplicationContextAware {
         XxlJobDynamicScheduler.xxlJobRegistryDao = applicationContext.getBean(XxlJobRegistryDao.class);
         XxlJobDynamicScheduler.xxlJobGroupDao = applicationContext.getBean(XxlJobGroupDao.class);
         XxlJobDynamicScheduler.adminBiz = applicationContext.getBean(AdminBiz.class);
+        XxlJobDynamicScheduler.lithosAdminBiz = applicationContext.getBean(LithosAdminBiz.class);
 	}
 
     // ---------------------- init + destroy ----------------------
@@ -76,6 +79,7 @@ public final class XxlJobDynamicScheduler implements ApplicationContextAware {
 
         // admin-server(spring-mvc)
         NetComServerFactory.putService(AdminBiz.class, XxlJobDynamicScheduler.adminBiz);
+        NetComServerFactory.putService(LithosAdminBiz.class, XxlJobDynamicScheduler.lithosAdminBiz);
         NetComServerFactory.setAccessToken(accessToken);
 
         // init i18n
@@ -116,7 +120,7 @@ public final class XxlJobDynamicScheduler implements ApplicationContextAware {
         }
 
         // set-cache
-        executorBiz = (ExecutorBiz) new NetComClientProxy(ExecutorBiz.class, address, accessToken).getObject();
+        executorBiz = (ExecutorBiz) new LithosNetComClientProxy(ExecutorBiz.class, address, accessToken).getObject();
         executorBizRepository.put(address, executorBiz);
         return executorBiz;
     }

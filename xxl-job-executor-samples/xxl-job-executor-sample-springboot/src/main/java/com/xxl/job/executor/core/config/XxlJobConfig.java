@@ -1,5 +1,7 @@
 package com.xxl.job.executor.core.config;
 
+import com.ik2k.lithos.core.annotations.XxlScan;
+import com.ik2k.lithos.core.executor.LithosXxlJobExecutor;
 import com.xxl.job.core.executor.XxlJobExecutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +16,7 @@ import org.springframework.context.annotation.Configuration;
  * @author xuxueli 2017-04-28
  */
 @Configuration
+@XxlScan("com.xxl.job.executor.xxl")
 @ComponentScan(basePackages = "com.xxl.job.executor.service.jobhandler")
 public class XxlJobConfig {
     private Logger logger = LoggerFactory.getLogger(XxlJobConfig.class);
@@ -41,9 +44,9 @@ public class XxlJobConfig {
 
 
     @Bean(initMethod = "start", destroyMethod = "destroy")
-    public XxlJobExecutor xxlJobExecutor() {
+    public LithosXxlJobExecutor xxlJobExecutor() {
         logger.info(">>>>>>>>>>> xxl-job config init.");
-        XxlJobExecutor xxlJobExecutor = new XxlJobExecutor();
+        LithosXxlJobExecutor xxlJobExecutor = new LithosXxlJobExecutor();
         xxlJobExecutor.setAdminAddresses(adminAddresses);
         xxlJobExecutor.setAppName(appName);
         xxlJobExecutor.setIp(ip);

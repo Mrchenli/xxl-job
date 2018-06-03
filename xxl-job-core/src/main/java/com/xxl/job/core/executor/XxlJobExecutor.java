@@ -37,6 +37,25 @@ public class XxlJobExecutor implements ApplicationContextAware {
     private String logPath;
     private int logRetentionDays;
 
+    private static List<String> jobDetails;
+    private static boolean isFinshJobDetails;
+
+    public static List<String> getJobDetails() {
+        return jobDetails;
+    }
+
+    public static void setJobDetails(List<String> jobDetails) {
+        XxlJobExecutor.jobDetails = jobDetails;
+    }
+
+    public static boolean isIsFinshJobDetails() {
+        return isFinshJobDetails;
+    }
+
+    public static void setIsFinshJobDetails(boolean isFinshJobDetails) {
+        XxlJobExecutor.isFinshJobDetails = isFinshJobDetails;
+    }
+
     public void setAdminAddresses(String adminAddresses) {
         this.adminAddresses = adminAddresses;
     }

@@ -40,7 +40,7 @@
 
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
-		<property name="basePackage" value="com.xxl.job.admin.dao" />
+		<property name="basePackage" value="com.xxl.job.admin.dao,com.ik2k.lithos.admin.dao" />
 	</bean>
     
 	<!-- ********************************* part 2 :for tx ********************************* -->

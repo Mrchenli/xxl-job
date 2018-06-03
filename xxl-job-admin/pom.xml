@@ -141,6 +141,12 @@
 			<version>${project.parent.version}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>com.ik2k.lithos</groupId>
+			<artifactId>lithos-admin</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+
 	</dependencies>
 
 </project>
